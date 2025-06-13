@@ -4,6 +4,13 @@ KMAK (Komodore Make) is a lightweight and minimalist build system written in C.<
 It is inspired by Makefile but much simpler with custom tasks support.<br>
 ![Build](https://img.shields.io/badge/build-kmak-lightgrey?style=flat-square&logo=c) ![Lang](https://img.shields.io/badge/language-C-blue?style=flat-square&logo=c) ![License](https://img.shields.io/badge/license-GPL-green?style=flat-square) ![Status](https://img.shields.io/badge/status-WIP-orange?style=flat-square)
 
+## Building
+To build KMAK, run
+```
+kmak.exe make.kmk compile
+```
+from the main directory. It will produce a `kmak0.exe` file that you can then rename `kmak.exe` to use.
+
 ## Starting
 ```
 usage: kmak.exe InputFile <Task>
