@@ -1,0 +1,12 @@
+CC = gcc
+SRC = game.c
+TARGET = game.exe
+
+task clean
+	cmd del $(TARGET)
+
+task run
+	cmd $(TARGET)
+
+task make
+	cmd $(CC) -o $(TARGET) $(SRC)

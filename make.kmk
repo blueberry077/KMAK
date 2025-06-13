@@ -1,0 +1,15 @@
+# Global Variables
+CC = gcc
+SRC = kmak.c
+TARGET = kmak0.exe
+
+# Cleaning Task
+task clean
+	print Cleaning...
+	cmd del $(TARGET)
+
+# Compiling Task
+task compile
+	print Compiling...
+	cmd $(CC) -o $(TARGET) $(SRC)
+	
