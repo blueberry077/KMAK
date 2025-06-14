@@ -16,7 +16,7 @@ from the main directory. It will produce a `kmak0.exe` file that you can then re
 usage: kmak.exe InputFile <Task>
 ```
 
-For example with `make.kmk` in example:
+For example with `make.kmk` in `example`:
 ```
 # Global Variables
 CC = gcc
