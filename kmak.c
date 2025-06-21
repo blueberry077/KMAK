@@ -35,6 +35,7 @@ int is_task(char *task);
 int parse_variable_definition(char *line);
 int parse_task(char *line);
 int parse_print(char *line);
+int parse_call(char *line);
 int parse_cmd(char *line);
 int run_task(char *name);
 
@@ -50,7 +51,7 @@ int gInsideTask = 0;
 
 int main(int argc, char **argv)
 {
-  if (argc < 2) {
+  if (argc < 3) {
     printf("error: No input file provided.\n");
     usage(argv[0]);
     return -1;
@@ -96,7 +97,7 @@ int main(int argc, char **argv)
     }
     
     if (gInsideTask && gCurrentTask) {
-      gCurrentTask->lines[gCurrentTask->line_count] = line;
+      gCurrentTask->lines[gCurrentTask->line_count] = _strdup(line);
       gCurrentTask->line_count++;
     }
     
@@ -154,7 +155,7 @@ char *get_variable_value(char *name)
 
 int is_task(char *task)
 {
-  for (int i = 0; i < gGlobalVarsCount; ++i)
+  for (int i = 0; i < gTasksCount; ++i)
     if (!strcmp(gTasks[i].name, task))
       return i;
   return -1;
@@ -275,6 +276,19 @@ int parse_print(char *line)
   return 1;
 }
 
+int parse_call(char *line)
+{
+  char *ptr;
+  
+  ptr = start_with_word(line, "call");
+  if (!ptr)
+    return 0;
+  
+  trim_left(&ptr);
+  run_task(ptr);
+  return 1;
+}
+
 int run_command(const char *cmdline)
 {
   STARTUPINFOA si;
@@ -344,7 +358,8 @@ int run_task(char *name)
   int task_idx;
   KMK_Task *task;
   
-  if ((task_idx = is_task(name)) < -1) {
+  task_idx = is_task(name);
+  if (task_idx < 0) {
     printf("error: task %s isn't defined.\n", name);
     return -1;
   }
@@ -355,8 +370,12 @@ int run_task(char *name)
     if (parse_print(line)) {
 
     } else
+    if (parse_call(line)) {
+    
+    } else
     if (parse_cmd(line)) {
     
     }
   }
+  return 0;
 }
